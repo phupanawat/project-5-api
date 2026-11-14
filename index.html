@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quake Watch | Live Earthquake Tracker</title>
+  <meta name="description" content="Live earthquake tracker built with the USGS Earthquake API and mo.js animations.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">COMP 584 &middot; Project 5 &middot; API + Animation</p>
+      <h1>Quake Watch</h1>
+      <p class="lead">
+        Live earthquakes from around the world, straight from the
+        <a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php" target="_blank" rel="noopener">USGS Earthquake API</a>,
+        with shockwave animations powered by
+        <a href="https://mojs.github.io/" target="_blank" rel="noopener">mo.js</a>.
+      </p>
+      <p class="hint">Tip: click any earthquake card to set off a shockwave sized to its magnitude.</p>
+    </div>
+
+    <div class="epicenter-panel">
+      <div id="epicenter" class="epicenter" aria-hidden="true">
+        <span class="epicenter-dot"></span>
+      </div>
+      <div class="epicenter-info">
+        <p class="epicenter-label">Strongest in this feed</p>
+        <p id="strongest-mag" class="epicenter-mag">--</p>
+        <p id="strongest-place" class="epicenter-place">Loading&hellip;</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="controls" aria-label="Filters">
+      <div class="control-group">
+        <span class="control-label">Time range</span>
+        <div class="button-row" id="range-buttons">
+          <button type="button" data-range="hour">Past hour</button>
+          <button type="button" data-range="day" class="active">Past day</button>
+          <button type="button" data-range="week">Past week</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="control-label">Minimum magnitude</span>
+        <div class="button-row" id="mag-buttons">
+          <button type="button" data-mag="0" class="active">All</button>
+          <button type="button" data-mag="1">1.0+</button>
+          <button type="button" data-mag="2.5">2.5+</button>
+          <button type="button" data-mag="4.5">4.5+</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="sort-select">Sort by</label>
+        <select id="sort-select">
+          <option value="newest">Newest first</option>
+          <option value="strongest">Strongest first</option>
+          <option value="deepest">Deepest first</option>
+        </select>
+      </div>
+
+      <button type="button" id="refresh-button" class="refresh">Refresh data</button>
+    </section>
+
+    <section class="stats" aria-label="Summary">
+      <article class="stat">
+        <p class="stat-value" id="stat-count">--</p>
+        <p class="stat-label">Earthquakes shown</p>
+      </article>
+      <article class="stat">
+        <p class="stat-value" id="stat-max">--</p>
+        <p class="stat-label">Strongest magnitude</p>
+      </article>
+      <article class="stat">
+        <p class="stat-value" id="stat-avg">--</p>
+        <p class="stat-label">Average magnitude</p>
+      </article>
+      <article class="stat">
+        <p class="stat-value" id="stat-depth">--</p>
+        <p class="stat-label">Average depth</p>
+      </article>
+    </section>
+
+    <p id="status" class="status" role="status">Loading earthquakes&hellip;</p>
+
+    <section id="quake-grid" class="quake-grid" aria-label="Earthquake list"></section>
+
+    <div class="more-row">
+      <button type="button" id="more-button" class="refresh" hidden>Show more</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      Data: <a href="https://earthquake.usgs.gov/" target="_blank" rel="noopener">U.S. Geological Survey</a>
+      &middot; Animation: <a href="https://mojs.github.io/" target="_blank" rel="noopener">mo.js</a>
+      &middot; <span id="updated">Not updated yet</span>
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mojs/core@1.7.1/dist/mo.umd.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
